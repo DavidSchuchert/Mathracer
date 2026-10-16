@@ -24,4 +24,8 @@ Antworten werden nur auf dem Server geprüft, der Client bekommt immer nur die a
 docker compose up -d --build
 ```
 
-Läuft danach auf Port 3000. Für `server.local` siehe `deploy.sh`.
+Läuft danach auf Port 3000. Für `server.local`:
+
+```bash
+SSH_HOST=root@server.local HOST_PORT=3001 ./deploy.sh
+```
