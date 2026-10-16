@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathRacer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="brand-dot"></span>MathRacer</div>
+  <div class="room-tag" id="roomTag" hidden>Raum <strong id="roomCode"></strong> <button class="link" id="copyLink">Link kopieren</button></div>
+</header>
+
+<main id="app">
+
+  <!-- Beitreten -->
+  <section class="screen" id="screen-join">
+    <h1>Kopfrechnen.<br><span class="accent">Gegeneinander.</span></h1>
+    <p class="lead">Alle bekommen dieselben Aufgaben. Wer zuerst durch ist, gewinnt. Falsche Antworten kosten Zeit.</p>
+    <form id="joinForm" class="card">
+      <label>Dein Name
+        <input id="nameInput" maxlength="16" placeholder="z. B. Lena" autocomplete="off" required>
+      </label>
+      <label>Raum-Code <span class="muted">(leer lassen für neuen Raum)</span>
+        <input id="codeInput" maxlength="4" placeholder="ABCD" autocomplete="off" style="text-transform:uppercase">
+      </label>
+      <button class="btn primary" type="submit">Los geht's</button>
+      <p class="error" id="joinError" hidden></p>
+    </form>
+  </section>
+
+  <!-- Lobby -->
+  <section class="screen" id="screen-lobby" hidden>
+    <div class="two-col">
+      <div class="card">
+        <h2>Spieler <span class="muted" id="playerCount"></span></h2>
+        <ul class="players" id="lobbyPlayers"></ul>
+        <p class="muted small">Teile den Raum-Code oder den Link, damit andere beitreten.</p>
+      </div>
+      <div class="card">
+        <h2>Einstellungen</h2>
+        <div class="field">
+          <span>Schwierigkeit</span>
+          <div class="seg" id="diffSeg">
+            <button data-v="easy">Leicht</button>
+            <button data-v="medium">Mittel</button>
+            <button data-v="hard">Schwer</button>
+          </div>
+          <p class="muted small" id="diffHint"></p>
+        </div>
+        <div class="field">
+          <span>Aufgaben</span>
+          <div class="seg" id="countSeg">
+            <button data-v="10">10</button>
+            <button data-v="20">20</button>
+            <button data-v="30">30</button>
+            <button data-v="50">50</button>
+          </div>
+        </div>
+        <div class="field host-only">
+          <span>Bots</span>
+          <div class="row">
+            <button class="btn ghost" id="addBot">+ Bot</button>
+            <button class="btn ghost" id="removeBots">Bots entfernen</button>
+          </div>
+        </div>
+        <button class="btn primary big host-only" id="startBtn">Rennen starten</button>
+        <p class="muted small guest-only">Warte, bis der Host das Rennen startet …</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rennen -->
+  <section class="screen" id="screen-race" hidden>
+    <div class="track card" id="track"></div>
+    <div class="arena">
+      <div class="countdown" id="countdown" hidden>3</div>
+      <div class="qbox" id="qbox">
+        <div class="qmeta"><span id="qIndex">1 / 20</span><span id="timer">0,0 s</span></div>
+        <div class="question" id="question">…</div>
+        <input class="answer" id="answerInput" inputmode="numeric" autocomplete="off" placeholder="?" disabled>
+        <div class="qfoot"><span id="errCount">0 Fehler</span><span class="muted">Enter zum Absenden</span></div>
+      </div>
+      <div class="done-msg" id="doneMsg" hidden></div>
+    </div>
+  </section>
+
+  <!-- Ergebnis -->
+  <section class="screen" id="screen-results" hidden>
+    <div class="card">
+      <h2>Ergebnis</h2>
+      <table class="results" id="resultsTable">
+        <thead><tr><th>#</th><th>Spieler</th><th>Zeit</th><th>Aufg./min</th><th>Genauigkeit</th><th>Fehler</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="row end">
+        <button class="btn primary host-only" id="againBtn">Nochmal</button>
+        <button class="btn ghost host-only" id="lobbyBtn">Zur Lobby</button>
+        <p class="muted small guest-only">Der Host entscheidet, wann es weitergeht.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
